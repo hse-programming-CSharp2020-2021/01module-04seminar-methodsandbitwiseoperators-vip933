@@ -1,5 +1,3 @@
-﻿using System;
-
 /*
  * Пользователь вводит неотрицательные целые (int) числа q и p, такие, что q <= p.
  * Определить все тройки попарно различных целых чисел a, b, c \in [q; p],
@@ -18,28 +16,43 @@
  *      При некорректных входных данных вывести сообщение "Ошибка" и завершить выполнение программы.
  *      Разрешается модифицировать предложенные методы и дополнять программу своими при необходимости.
  */
+using System;
+using System.Globalization;
+
 
 namespace Task1
 {
     class Program
     {
 
-        // TODO: использовать передачу параметров по ссылке
-        static void ReadBoundaries()
+        static void ReadBoundaries(out int q, out int p)
         {
-            // TODO: прочитать границы и проверить введенные данные на корректность
+            CultureInfo.CurrentCulture = new CultureInfo("ru-RU");
+
+            int.TryParse(Console.ReadLine(), out q);
+            int.TryParse(Console.ReadLine(), out p);
+            if (q > p || q < 0 || p < 0)
+            {
+                Console.OutputEncoding = System.Text.Encoding.UTF8;
+                Console.WriteLine("Ошибка");
+                Environment.Exit(0);
+            }
         }
 
-        static void PrintPythagorasNumbers()
+        static void PrintPythagorasNumbers(int q, int p)
         {
-            // TODO: вывести пифагоровы тройки с числами из введенного отрезка
+            for (int a = q; a <= p; ++a)
+                for (int b = a; b <= p; ++b)
+                    for (int c = b; c <= p; ++c)
+                        if (a*a + b*b == c*c)
+                            Console.WriteLine(a + " " + b + " " + c);
         }
 
         static void Main(string[] args)
         {
-            // TODO: дополнить метод так, чтобы программа выполняла поставленную задачу
-            ReadBoundaries();
-            PrintPythagorasNumbers();
+            int q, p;
+            ReadBoundaries(out q, out p);
+            PrintPythagorasNumbers(q, p);
         }
     }
 }
